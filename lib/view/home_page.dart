@@ -79,15 +79,9 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) => setState(() => _index = index),
   
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: "",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.book),label: "",),
   
-          BottomNavigationBarItem(
-            icon: Icon(Icons.share),
-            label: "",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.share),label: "",),
         ]
       ),
       

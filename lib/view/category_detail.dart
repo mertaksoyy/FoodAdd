@@ -30,6 +30,17 @@ class _CategoryDetailState extends State<CategoryDetail> {
     return foods;
   }
 
+  Future openAddDialog(FoodNote? food) async{
+    await showDialog(
+      context: context, 
+      builder: (context) {
+        return FoodAddDialog(category: getCategoryName(), food: food,);
+      }
+    );
+
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +70,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   backgroundColor: Colors.white,
 
                   leading: IconButton(
+                    iconSize: 30,
                     icon: const Icon(
                       Icons.arrow_back_ios_new, 
                       color: Colors.black,
-                      size: 30,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ), 
@@ -88,17 +99,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       FoodNote food = foodList[index];
                       return GestureDetector(
                         child: FoodDetailCard(food: food,),
-                        onTap: () async{
-
-                          await showDialog(
-                            context: context, 
-                            builder: (context) {
-                              return FoodAddDialog(category: getCategoryName(), food: food,);
-                            }
-                          );
-
-                          setState(() {});
-                        },
+                        onTap: () => openAddDialog(food),
                       );
                     }
                   )
@@ -117,16 +118,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff303030),
-        onPressed: () async {
-          await showDialog(
-            context: context, 
-            builder: (context) {
-              return FoodAddDialog(category: getCategoryName());
-            }
-          );
-          
-          setState(() {});
-        },
+        onPressed: () => openAddDialog(null),
         child: const Icon(
           Icons.add,
           size: 35,

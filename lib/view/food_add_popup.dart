@@ -44,12 +44,12 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
       update = true;
     }
 
-    
 
     return AlertDialog(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
+
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -108,16 +108,10 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
 
             const SizedBox(height: 40,),
 
-            SizedBox(
-              width: 150,
-              height: 40,
+            ElevatedButton.icon(
+              onPressed: () {
+                if (tfFoodName.text.isNotEmpty && tfRestName.text.isNotEmpty){
 
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
-                ),
-
-                onPressed:() {
                   if (update){
                     updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating);
                   } else {
@@ -125,69 +119,46 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
                   }
                   
                   Navigator.of(context).pop();
-                },
+                }
+              },
 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      (update) ? Icons.update : Icons.add, 
-                      size: 30,
-                    ),
+              icon: Icon((update) ? Icons.update : Icons.add, size:30),
 
-                    const SizedBox(width: 5,),
+              label: Text(
+                (update) ? "Update" : "Add", 
+                style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),
+              ),
 
-                    Text(
-                      (update) ? "Update" : "Add",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ]
-                )
-              )
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+              ),
             ),
+
             const SizedBox(height: 15,),
 
-            (update) ? SizedBox(
-              width: 120,
-              height: 40,
-
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
-                ),
-
-                onPressed:() {
-                  deleteFoodOnPress(widget.food!.foodID);
+            (!update) ? Container() :
+            ElevatedButton.icon(
+              onPressed: () {
+                if (update){
+                  updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating);
+                } else {
+                  addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating);
+                }
                   
-                  Navigator.of(context).pop();
-                },
+                Navigator.of(context).pop();
+              },
 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.delete,
-                      size: 20,
-                    ),
+              icon: const Icon(Icons.delete, size:20),
 
-                    SizedBox(width: 5,),
+              label: const Text(
+                "Delete", 
+                style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),
+              ),
 
-                    Text(
-                      "Delete",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ]
-                )
-              )
-            ) : Container(),
-
-
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+              ),
+            ),
           ],
         )
       );

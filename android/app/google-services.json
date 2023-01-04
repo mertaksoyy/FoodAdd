@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "401943609924",
+    "project_id": "foodadd-ab6b0",
+    "storage_bucket": "foodadd-ab6b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401943609924:android:f960b44834eea4505e3211",
+        "android_client_info": {
+          "package_name": "com.mapapps.foodadd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401943609924-l2a8vgvjcuh10md7itn1p12458ttmpn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJJNPlWgQ5EIndarNI6qTzwEoZJn62DhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401943609924-l2a8vgvjcuh10md7itn1p12458ttmpn8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "401943609924-245m8cv81b2i7ldfasnc4b2l93s3eig1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodadd"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

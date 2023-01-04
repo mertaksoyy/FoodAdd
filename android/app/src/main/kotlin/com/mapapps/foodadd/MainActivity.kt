@@ -1,4 +1,4 @@
-package com.example.foodadd
+package com.mapapps.foodadd
 
 import io.flutter.embedding.android.FlutterActivity
 

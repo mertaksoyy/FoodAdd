@@ -1,59 +1,52 @@
-import 'package:flutter/material.dart';
+/*
+}*/
 
-//import 'package:foodadd/view/food_add.dart';
-import 'package:foodadd/view/food_add_popup.dart';
+import 'package:flutter/material.dart';
 
 import 'package:foodadd/model/food_note/food_note_dao.dart';
 import 'package:foodadd/model/food_note/food_note_model.dart';
 
 import 'package:foodadd/view/food_detail_card.dart';
 
-class CategoryDetail extends StatefulWidget {
-  const CategoryDetail({super.key, required this.title});
+import 'package:foodadd/view/food_add_popup.dart';
 
-  final String title;
+class SearchResults extends StatefulWidget {
+  const SearchResults({super.key, required this.searchKey});
+
+  final String searchKey;
 
   @override
-  State<CategoryDetail> createState() => _CategoryDetailState();
+  State<SearchResults> createState() => _SearchResultsState();
 }
 
-class _CategoryDetailState extends State<CategoryDetail> {
+class _SearchResultsState extends State<SearchResults> {
 
-  String getCategoryName(){
-    return widget.title.toLowerCase().replaceAll(' ', '');
-  }
+  Future<List<FoodNote>> searchFoodNote(String searchKey) async {
+    List<FoodNote> searchRes = await FoodsDao().getSearchRes(searchKey);
 
-  Future<List<FoodNote>> getFoods() async {
-    String category = getCategoryName();
-
-    var foods = await FoodsDao().getCategory(category);
-
-    return foods;
+    return searchRes;
   }
 
   Future openAddDialog(FoodNote? food) async{
     await showDialog(
       context: context, 
       builder: (context) {
-        return FoodAddDialog(category: getCategoryName(), food: food,);
+        return FoodAddDialog(category: food!.category, food: food,);
       }
     );
 
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: FutureBuilder<List<FoodNote>>(
-        future : getFoods(),
+        future: searchFoodNote(widget.searchKey,),
 
         builder: (context, snapshot) {
-
           if (snapshot.hasData){
-            List<FoodNote>? foodList = snapshot.data;
+            List<FoodNote>? searchRes = snapshot.data;
 
             return CustomScrollView(
               slivers: [
@@ -81,7 +74,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(
-                      widget.title, 
+                      "Search Results", 
                       textScaleFactor: 1,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -94,10 +87,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   ),
 
                   delegate: SliverChildBuilderDelegate(
-                    childCount: foodList!.length,
+                    childCount: searchRes!.length,
 
                     (context, index) {
-                      FoodNote food = foodList[index];
+                      FoodNote food = searchRes[index];
                       return GestureDetector(
                         child: FoodDetailCard(food: food,),
                         onTap: () => openAddDialog(food),
@@ -107,23 +100,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 ),
               ],
             );
-
           } else {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
         }
-      ),
-
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xff303030),
-        onPressed: () => openAddDialog(null),
-        child: const Icon(
-          Icons.add,
-          size: 35,
-        ),
       ),
     );
   }

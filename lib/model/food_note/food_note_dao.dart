@@ -46,6 +46,20 @@ class FoodsDao {
     );
   }
 
+  Future<List<FoodNote>> getSearchRes(String search) async {
+
+    var db = await DatabaseHelper.databaseAccess();
+
+    List<Map<String, dynamic>> foods = await db.query("Foods", where: "foodName LIKE ?", whereArgs: ["%$search%"]);
+
+    return List.generate(foods.length, (i) {
+      var food = foods[i];
+
+        return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"]);
+      }
+    );
+  }
+
   Future<void> foodUpdate(int foodID, String category, String foodName, String restName, double rating) async{
     var db = await DatabaseHelper.databaseAccess();
 

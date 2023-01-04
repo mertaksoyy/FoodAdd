@@ -139,11 +139,7 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
             (!update) ? Container() :
             ElevatedButton.icon(
               onPressed: () {
-                if (update){
-                  updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating);
-                } else {
-                  addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating);
-                }
+                deleteFoodOnPress(widget.food!.foodID);
                   
                 Navigator.of(context).pop();
               },

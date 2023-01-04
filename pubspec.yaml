@@ -1,5 +1,5 @@
 name: foodadd
-description: A new Flutter project.
+description: Your favorite foods and drinks in one place.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -37,6 +37,7 @@ dependencies:
   path: ^1.8.2
 
   flutter_launcher_icons: ^0.11.0
+  firebase_core: ^2.4.0
 
 flutter_icons:
   android: "launcher_icon"

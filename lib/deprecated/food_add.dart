@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodadd/model/food_note/food_note_dao.dart';
 
@@ -18,7 +18,7 @@ class _AddFoodState extends State<AddFood> {
   Future<void> addNoteOnPress(String foodName, String restName, double rating) async {
     String category = widget.title.toLowerCase().replaceAll(' ', '');
 
-    await FoodsDao().addFoodNote(category, foodName, restName, rating);
+    await FoodsDao().addFoodNote(category, foodName, restName, rating,);
   }
 
   var tfFoodName = TextEditingController();
@@ -146,4 +146,4 @@ class _AddFoodState extends State<AddFood> {
       ),
     );
   }
-}
+} */

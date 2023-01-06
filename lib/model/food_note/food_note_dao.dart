@@ -12,12 +12,12 @@ class FoodsDao {
     return List.generate(foods.length, (i) {
       var food = foods[i];
 
-      return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"]);
+      return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"],food["restAddr"]);
     });
   }
 
 
-  Future<void> addFoodNote(String category, String foodName, String restName, double rating) async {
+  Future<void> addFoodNote(String category, String foodName, String restName, double rating,String restAddr) async {
 
     var db = await DatabaseHelper.databaseAccess();
 
@@ -26,6 +26,7 @@ class FoodsDao {
     note["foodName"] = foodName;
     note["restName"] = restName;
     note["rating"] = rating;
+    note["restAddr"] = restAddr;
 
     await db.insert("Foods", note);
   }
@@ -41,7 +42,7 @@ class FoodsDao {
     return List.generate(foods.length, (i) {
       var food = foods[i];
 
-        return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"]);
+        return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"],food["restAddr"]);
       }
     );
   }
@@ -55,12 +56,12 @@ class FoodsDao {
     return List.generate(foods.length, (i) {
       var food = foods[i];
 
-        return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"]);
+        return FoodNote(food["id"], food["category"], food["foodName"], food["restName"], food["rating"],food["restAddr"]);
       }
     );
   }
 
-  Future<void> foodUpdate(int foodID, String category, String foodName, String restName, double rating) async{
+  Future<void> foodUpdate(int foodID, String category, String foodName, String restName, double rating,String restAddr) async{
     var db = await DatabaseHelper.databaseAccess();
 
     Map<String, dynamic> info = {};
@@ -68,6 +69,7 @@ class FoodsDao {
     info["foodName"] = foodName;
     info["restName"] = restName;
     info["rating"] = rating;
+    info["restAddr"] = restAddr;
 
     await db.update("Foods", info, where: "id = ?", whereArgs: [foodID]);
   }

@@ -17,22 +17,24 @@ class FoodAddDialog extends StatefulWidget {
 
 class _FoodAddDialogState extends State<FoodAddDialog> {
 
-  Future<void> addNoteOnPress(String category, String foodName, String restName, double rating) async {
-    await FoodsDao().addFoodNote(category, foodName, restName, rating);
+  Future<void> addNoteOnPress(String category, String foodName, String restName, double rating,String restAddr) async {
+    await FoodsDao().addFoodNote(category, foodName, restName, rating,restAddr);
   }
 
-  Future<void> updateNoteOnPress(int foodID, String category, String foodName, String restName, double rating) async {
-    await FoodsDao().foodUpdate(foodID, category, foodName, restName, rating);
+  Future<void> updateNoteOnPress(int foodID, String category, String foodName, String restName, double rating,String restAddr) async {
+    await FoodsDao().foodUpdate(foodID, category, foodName, restName, rating,restAddr);
   }
 
   Future<void> deleteFoodOnPress(int foodID) async{
     await FoodsDao().foodDelete(foodID);
   }
 
+
   @override
   Widget build(BuildContext context) {
     var tfFoodName = TextEditingController();
     var tfRestName = TextEditingController();
+    var tfRestAddr = TextEditingController();
     double rating = 4.5;
     bool update = false;
 
@@ -40,51 +42,76 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
       tfFoodName.text = widget.food!.foodName;
       tfRestName.text = widget.food!.restName;
       rating = widget.food!.rating;
+      tfRestAddr.text = widget.food!.restAddr;
 
       update = true;
     }
 
 
-    return AlertDialog(
+    return Dialog(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
 
-        content: Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 30,),
 
-            TextFormField(
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.no_food_outlined),
-                labelText: "Food Name",
-                hintText: "Name",
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20,40,20,10),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                  labelText: "Food Name",
+                  hintText: "Food",
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20,
+                ),
+                controller: tfFoodName,
               ),
-              style: const TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 20,
-              ),
-              controller: tfFoodName,
             ),
 
-            const SizedBox(height: 30,),
 
-            TextFormField(
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
-                labelText: "Restaurant Name",
-                hintText: "Restaurant",
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                  labelText: "Restaurant Name",
+                  hintText: "Restaurant",
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20,
+                ),
+                controller: tfRestName,
               ),
-              style: const TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 20,
-              ),
-              controller: tfRestName,
             ),
 
-            const SizedBox(height: 40,),
+
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20,10,20,20),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                  labelText: "Restaurant Address",
+                  hintText: "Address",
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20,
+                ),
+                controller:  tfRestAddr,
+              ),
+            ),
+
+
 
             RatingBar.builder(
               glow: false,
@@ -106,16 +133,16 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
               },
             ),
 
-            const SizedBox(height: 40,),
+            const SizedBox(height: 20,),
 
             ElevatedButton.icon(
               onPressed: () {
                 if (tfFoodName.text.isNotEmpty && tfRestName.text.isNotEmpty){
 
                   if (update){
-                    updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating);
+                    updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
                   } else {
-                    addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating);
+                    addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
                   }
                   
                   Navigator.of(context).pop();

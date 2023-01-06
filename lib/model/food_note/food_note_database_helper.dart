@@ -11,7 +11,7 @@ class DatabaseHelper {
       databasePath, version: 1,
       onCreate: (Database db, int version) async {
       await db.execute(
-        'CREATE TABLE Foods (id INTEGER PRIMARY KEY, category TEXT, foodName TEXT, restName TEXT, rating FLOAT)');
+        'CREATE TABLE Foods (id INTEGER PRIMARY KEY, category TEXT, foodName TEXT, restName TEXT, rating  FLOAT,restAddr TEXT)');
       });
 
     return database;

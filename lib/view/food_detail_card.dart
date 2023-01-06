@@ -30,7 +30,13 @@ class FoodDetailCard extends StatelessWidget {
           children: [
             ListTile(
               title: Text(food.foodName, style: const TextStyle(fontSize: 20),),
-              subtitle: Text(food.restName, style: const TextStyle(fontSize: 20),),
+              subtitle:Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(food.restName, style: const TextStyle(fontSize: 20),),
+                  Text(food.restAddr, style: const TextStyle(fontSize: 20),),
+                ],
+              ),
             ),
 
             RatingBarIndicator(

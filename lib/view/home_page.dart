@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                "FoodAdd", 
+                "FoodAdd",
                 textScaleFactor: 1,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
             ),
             expandedHeight: 120,
           ),
-
           body,
         ],
       ),

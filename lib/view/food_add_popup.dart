@@ -4,6 +4,8 @@ import 'package:foodadd/model/food_note/food_note_model.dart';
 
 import 'package:foodadd/model/food_note/food_note_dao.dart';
 
+import 'package:share_plus/share_plus.dart';
+
 
 class FoodAddDialog extends StatefulWidget {
   const FoodAddDialog({super.key, required this.category, this.food});
@@ -164,24 +166,44 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
             const SizedBox(height: 15,),
 
             (!update) ? Container() :
-            ElevatedButton.icon(
-              onPressed: () {
-                deleteFoodOnPress(widget.food!.foodID);
+            Column(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    deleteFoodOnPress(widget.food!.foodID);
                   
-                Navigator.of(context).pop();
-              },
+                    Navigator.of(context).pop();
+                  },
 
-              icon: const Icon(Icons.delete, size:20),
+                  icon: const Icon(Icons.delete, size:20),
 
-              label: const Text(
-                "Delete", 
-                style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),
-              ),
+                  label: const Text(
+                    "Delete", 
+                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),
+                  ),
 
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
-              ),
-            ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+                  ),
+                ),
+
+                ElevatedButton.icon(
+                  icon: Icon(Icons.share), 
+                  label: Text("Share"),
+
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+                  ),
+
+                  onPressed: () async {
+                    String text = "Check what i saved on FoodAdd...\n${widget.food!.foodName}, on ${widget.food!.restName} and i rated ${widget.food!.rating}.";
+                    await Share.share(text);
+                  }, 
+                ),
+                
+                const SizedBox(height: 15,),
+              ],
+            )
           ],
         )
       );

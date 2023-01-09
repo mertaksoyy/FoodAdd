@@ -3,8 +3,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodadd/model/food_note/food_note_model.dart';
 
 import 'package:foodadd/model/food_note/food_note_dao.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 import 'package:share_plus/share_plus.dart';
+
+import 'dart:io';
 
 
 class FoodAddDialog extends StatefulWidget {
@@ -188,24 +192,66 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
                 ),
 
                 ElevatedButton.icon(
-                  icon: Icon(Icons.share), 
-                  label: Text("Share"),
+                  icon: const Icon(Icons.share), 
+                  label: const Text("Share"),
 
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
                   ),
 
                   onPressed: () async {
-                    String text = "Check what i saved on FoodAdd...\n${widget.food!.foodName}, on ${widget.food!.restName} and i rated ${widget.food!.rating}.";
-                    await Share.share(text);
+                    final controller = ScreenshotController();
+                    final bytes = await controller.captureFromWidget(
+                      ShareCard(food: widget.food!),
+                    );
+
+                    final directory = await getApplicationDocumentsDirectory();
+                    final image = File("${directory.path}/saved.png");
+                    image.writeAsBytesSync(bytes);
+
+                    final ximage = XFile(image.path);
+                    
+                    await Share.shareXFiles([ximage]);
                   }, 
                 ),
-                
+
+                ShareCard(food: widget.food!),
+
                 const SizedBox(height: 15,),
               ],
             )
           ],
         )
       );
+  }
+}
+
+class ShareCard extends StatelessWidget {
+  const ShareCard({super.key, required this.food});
+
+  final FoodNote food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.blue,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(food.foodName),
+          Text(food.restName),
+          RatingBarIndicator(
+            rating: food.rating,
+            itemCount: 5,
+            itemSize: 25,
+
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

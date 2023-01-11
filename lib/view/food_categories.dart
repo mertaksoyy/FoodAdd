@@ -12,10 +12,9 @@ class FoodCategories extends StatelessWidget {
   ];*/
 
   static const List<String> categories = [
-    "Hamburger", "Kumpir", "Pizza", "Döner", 
-    "Ev Yemekleri", "Kahve", "Köfte", "Tavuk", 
-    "Uzak Doğu", "Balık ve Deniz Ürünleri", "Dondurma", 
-    "Dünya Mutfağı", "Kahvaltı Börek", "Kebap"
+    "Hamburger", "Pizza", "Kebap","Et Yemekleri","Tavuk",
+    "Balık ve Deniz Ürünleri","Ev Yemekleri", "Dünya Mutfağı", "Kumpir",
+    "Kahvaltı", "Kahve", "Tatlı",
   ];
 
   @override

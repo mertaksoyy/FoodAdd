@@ -203,7 +203,7 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
                   onPressed: () async {
                     final controller = ScreenshotController();
                     final bytes = await controller.captureFromWidget(
-                      ShareCard(food: widget.food!),
+                      shareCard(food: widget.food!),
                     );
 
                     final directory = await getApplicationDocumentsDirectory();
@@ -216,7 +216,7 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
                   }, 
                 ),
 
-                ShareCard(food: widget.food!),
+               //shareCard(food: widget.food!),
 
                 const SizedBox(height: 15,),
               ],

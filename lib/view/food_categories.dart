@@ -65,7 +65,7 @@ class FoodCategoryCard extends StatelessWidget {
       color: Theme.of(context).primaryColor,
 
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(20),
         ),
 
 

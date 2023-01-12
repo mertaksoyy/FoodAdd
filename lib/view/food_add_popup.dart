@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodadd/model/food_note/food_note_model.dart';
 import 'package:foodadd/view/sharecard.dart';
@@ -13,6 +14,7 @@ import 'dart:io';
 
 
 class FoodAddDialog extends StatefulWidget {
+
   const FoodAddDialog({super.key, required this.category, this.food});
 
   final String category;
@@ -56,172 +58,184 @@ class _FoodAddDialogState extends State<FoodAddDialog> {
 
 
     return Dialog(
+
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
+        child:SingleChildScrollView(
+          child: Column(
+
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
 
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20,40,20,10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
-                  labelText: "Food Name",
-                  hintText: "Food",
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20,15,20,10),
+                child: TextFormField(
+                  inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                    labelText: "Food Name",
+                    hintText: "Food",
+                  ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                  controller: tfFoodName,
                 ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20,
-                ),
-                controller: tfFoodName,
-              ),
-            ),
-
-
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
-                  labelText: "Restaurant Name",
-                  hintText: "Restaurant",
-                ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20,
-                ),
-                controller: tfRestName,
-              ),
-            ),
-
-
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,20),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
-                  labelText: "Restaurant Address",
-                  hintText: "Address",
-                ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20,
-                ),
-                controller:  tfRestAddr,
-              ),
-            ),
-
-
-
-            RatingBar.builder(
-              glow: false,
-              initialRating: rating,
-              minRating: 0,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Theme.of(context).indicatorColor,
-                size: 40,
               ),
 
-              onRatingUpdate: (r) {
-                rating = r;
-              },
-            ),
 
-            const SizedBox(height: 20,),
 
-            ElevatedButton.icon(
-              onPressed: () {
-                if (tfFoodName.text.isNotEmpty && tfRestName.text.isNotEmpty){
-
-                  if (update){
-                    updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
-                  } else {
-                    addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
-                  }
-                  
-                  Navigator.of(context).pop();
-                }
-              },
-
-              icon: Icon((update) ? Icons.update : Icons.add, size:30),
-
-              label: Text(
-                (update) ? "Update" : "Add", 
-                style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20,10,20,10),
+                child: TextFormField(
+                  inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                    labelText: "Restaurant Name",
+                    hintText: "Restaurant",
+                  ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                  controller: tfRestName,
+                ),
               ),
 
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20,10,20,20),
+                child: TextFormField(
+                  inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.food_bank_outlined, size: 30,),
+                    labelText: "Restaurant Address",
+                    hintText: "Address",
+                  ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                  controller:  tfRestAddr,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 15,),
 
-            (!update) ? Container() :
-            Column(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    deleteFoodOnPress(widget.food!.foodID);
-                  
+
+              RatingBar.builder(
+                glow: false,
+                initialRating: rating,
+                minRating: 0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Theme.of(context).indicatorColor,
+                  size: 40,
+                ),
+
+                onRatingUpdate: (r) {
+                  rating = r;
+                },
+              ),
+
+              const SizedBox(height: 20,),
+
+              //update button
+              ElevatedButton.icon(
+                onPressed: () {
+                  if (tfFoodName.text.isNotEmpty && tfRestName.text.isNotEmpty){
+
+                    if (update){
+                      updateNoteOnPress(widget.food!.foodID, widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
+                    } else {
+                      addNoteOnPress(widget.category, tfFoodName.text, tfRestName.text, rating,tfRestAddr.text);
+                    }
+
                     Navigator.of(context).pop();
-                  },
+                  }
+                },
 
-                  icon: const Icon(Icons.delete, size:20),
+                icon: Icon((update) ? Icons.update : Icons.add, size:30),
 
-                  label: const Text(
-                    "Delete", 
-                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),
-                  ),
-
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
-                  ),
+                label: Text(
+                  (update) ? "Update" : "Add",
+                  style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),
                 ),
 
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.share), 
-                  label: const Text("Share"),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+                ),
+              ),
 
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+              const SizedBox(height: 15,),
+
+              (!update) ? Container() :
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0,0,0,0),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        deleteFoodOnPress(widget.food!.foodID);
+
+                        Navigator.of(context).pop();
+                      },
+
+                      icon: const Icon(Icons.delete, size:20),
+
+                      label: const Text(
+                        "Delete",
+                        style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),
+                      ),
+
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+                      ),
+                    ),
                   ),
 
-                  onPressed: () async {
-                    final controller = ScreenshotController();
-                    final bytes = await controller.captureFromWidget(
-                      shareCard(food: widget.food!),
-                    );
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.share),
+                    label: const Text("Share"),
 
-                    final directory = await getApplicationDocumentsDirectory();
-                    final image = File("${directory.path}/saved.png");
-                    image.writeAsBytesSync(bytes);
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(const Color(0xff303030)),
+                    ),
 
-                    final ximage = XFile(image.path);
-                    
-                    await Share.shareXFiles([ximage]);
-                  }, 
-                ),
+                    onPressed: () async {
+                      final controller = ScreenshotController();
+                      final bytes = await controller.captureFromWidget(
+                        shareCard(food: widget.food!),
+                      );
 
-               //shareCard(food: widget.food!),
+                      final directory = await getApplicationDocumentsDirectory();
+                      final image = File("${directory.path}/saved.png");
+                      image.writeAsBytesSync(bytes);
 
-                const SizedBox(height: 15,),
-              ],
-            )
-          ],
+                      final ximage = XFile(image.path);
+
+                      await Share.shareXFiles([ximage]);
+                    },
+                  ),
+
+                  //shareCard(food: widget.food!),
+
+                  const SizedBox(height: 15,),
+                ],
+              )
+            ],
+          )
         )
       );
   }

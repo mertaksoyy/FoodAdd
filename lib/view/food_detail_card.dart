@@ -16,7 +16,7 @@ class FoodDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
 
       child: Card(
         shape: RoundedRectangleBorder(
@@ -33,6 +33,7 @@ class FoodDetailCard extends StatelessWidget {
               subtitle:Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 10,),
                   Text(food.restName, style: const TextStyle(fontSize: 20),),
                   Text(food.restAddr, style: const TextStyle(fontSize: 20),),
                 ],

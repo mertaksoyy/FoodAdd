@@ -62,26 +62,45 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-  
-        iconSize: 40,
-  
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-  
-        backgroundColor: const Color(0xff303030),
+          bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 1, blurRadius: 10),
+            ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5,5,5,5),
+              child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.shifting,
+                      selectedItemColor: Colors.white,
+                    unselectedItemColor: Colors.grey,
 
-        currentIndex: _index,
+                  iconSize: 40,
 
-        onTap: (index) => setState(() => _index = index),
-  
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.book),label: "",),
-  
-          BottomNavigationBarItem(icon: Icon(Icons.share),label: "",),
-        ]
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+
+                  backgroundColor: const Color(0xff303030),
+
+                  currentIndex: _index,
+
+                  onTap: (index) => setState(() => _index = index),
+
+                  items: const [
+                    BottomNavigationBarItem(icon: Icon(Icons.book),label: "",
+                        backgroundColor: Color(0xff3F4045)
+                    ),
+
+                    BottomNavigationBarItem(icon: Icon(Icons.share),label: "",
+                        backgroundColor: const Color(0xff30292F)
+                    ),
+                  ]
+                  )
+              ),
+            )
       ),
       
     );

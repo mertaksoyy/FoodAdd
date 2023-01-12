@@ -22,18 +22,23 @@ class shareCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                  width: 200,
-                  height: 200,
+                  width: 150,
+                  height: 150,
                   child: Image.asset("images/hamburgers.png")),
               SizedBox(height: 20,),
 
-              Text(style:TextStyle(fontSize: 30),"Food Name"),
+              Text(style:TextStyle(fontSize: 20),"Food Name"),
               Divider(thickness: 7,indent: 50,endIndent: 50,),
-              Text(style:TextStyle(fontSize: 50), food.foodName),
-              Text(style:TextStyle(fontSize: 30),"Restaurant Name"),
+              Text(style:TextStyle(fontSize: 20), food.foodName),
+
+              SizedBox(height: 20,),
+
+              Text(style:TextStyle(fontSize: 20),"Restaurant Name"),
               Divider(thickness: 7,indent: 50,endIndent: 50,),
-              Text(style:TextStyle(fontSize: 50), food.restName),
-              Divider(thickness: 7,indent: 50,endIndent: 50,),
+              Text(style:TextStyle(fontSize: 20), food.restName),
+
+              SizedBox(height: 10,),
+              //Divider(thickness: 7,indent: 50,endIndent: 50,),
               RatingBarIndicator(
                 rating: food.rating,
                 itemCount: 5,
@@ -43,7 +48,11 @@ class shareCard extends StatelessWidget {
                   Icons.star,
                   color: Colors.amber,
                 ),
-              )
+              ),
+              SizedBox(height:5,),
+
+              Divider(thickness: 3,indent: 20,endIndent: 20,),
+              Text(style:TextStyle(fontSize: 20),"FoodAdd"),
             ],//Childrenın
           ),
         ),

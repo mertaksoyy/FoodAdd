@@ -25,33 +25,43 @@ class FoodDetailCard extends StatelessWidget {
 
         color: Theme.of(context).primaryColor,
 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child:Stack(
           children: [
-            ListTile(
-              title: Text(food.foodName, style: const TextStyle(fontSize: 20),),
-              subtitle:Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10,),
-                  Text(food.restName, style: const TextStyle(fontSize: 20),),
-                  Text(food.restAddr, style: const TextStyle(fontSize: 20),),
-                ],
-              ),
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ListTile(
+                  title: Text(food.foodName, style: const TextStyle(fontSize: 20),),
+                  subtitle:Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10,),
+                      Text(food.restName, style: const TextStyle(fontSize: 20),),
+                      Text(food.restAddr, style: const TextStyle(fontSize: 20),),
+                    ],
+                  ),
+                ),
 
-            RatingBarIndicator(
-              rating: food.rating,
-              itemCount: 5,
-              itemSize: 25,
+                RatingBarIndicator(
+                  rating: food.rating,
+                  itemCount: 5,
+                  itemSize: 25,
 
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Theme.of(context).indicatorColor,
-              ),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Theme.of(context).indicatorColor,
+                  ),
+                ),
+
+              ],
             ),
+              const Positioned(
+              child: Icon(Icons.settings),
+              bottom: 2.0,
+              right: 2.0,
+              )
           ],
-        )
+        ),
       )
     );
   }

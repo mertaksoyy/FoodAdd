@@ -12,6 +12,7 @@ import 'package:foodadd/login_signup.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -35,7 +36,6 @@ class _HomePageState extends State<HomePage> {
     }
   
     return Scaffold(
-
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -79,10 +79,10 @@ class _HomePageState extends State<HomePage> {
             ),
             expandedHeight: 120,
           ),
-
           body,
         ],
       ),
+
 
           bottomNavigationBar: SafeArea(
             child: Container(
@@ -126,8 +126,9 @@ class _HomePageState extends State<HomePage> {
                   )
               ),
             )
-      ),
+            ),
           )
+
     );
   }
 }

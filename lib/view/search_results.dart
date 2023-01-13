@@ -1,6 +1,3 @@
-/*
-}*/
-
 import 'package:flutter/material.dart';
 
 import 'package:foodadd/model/food_note/food_note_dao.dart';

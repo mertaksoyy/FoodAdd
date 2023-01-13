@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:foodadd/view/account_page.dart';
 
 import 'package:foodadd/view/food_categories.dart';
 import 'package:foodadd/view/social.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:foodadd/login_signup.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
-  static const List<String> categories = [
-    "Main Courses", "Soups", "Hamburgers", "Salads", "Drinks", "Desserts"
-  ];
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -49,33 +50,55 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,//Theme.of(context).dividerColor,
 
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                "FoodAdd",
-                textScaleFactor: 1,
-                style: Theme.of(context).textTheme.titleLarge,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "FoodAdd",
+                    textScaleFactor: 1,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+
+                  const SizedBox(width: 20,),
+
+                  IconButton(
+                    icon: Icon(Icons.person),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AccountPage(
+                          name: "test",
+                          email: "test",
+                        )),
+                      );
+                    }, 
+                  )
+                ],
               ),
               //background: Image.asset("images/foodadd_logo.png"),
             ),
             expandedHeight: 120,
           ),
+
           body,
         ],
       ),
 
-          bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 1, blurRadius: 10),
-            ],
+          bottomNavigationBar: SafeArea(
+            child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+              ],
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(5,5,5,5),
+              padding: const EdgeInsets.all(5),
               child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
+              borderRadius: const BorderRadius.all(Radius.circular(30)),
                   child: BottomNavigationBar(
                     type: BottomNavigationBarType.shifting,
-                      selectedItemColor: Colors.white,
+                    selectedItemColor: Colors.white,
                     unselectedItemColor: Colors.grey,
 
                   iconSize: 40,
@@ -87,7 +110,9 @@ class _HomePageState extends State<HomePage> {
 
                   currentIndex: _index,
 
-                  onTap: (index) => setState(() => _index = index),
+                  onTap: (index) {                      
+                    setState(() => _index = index);
+                  }, 
 
                   items: const [
                     BottomNavigationBarItem(icon: Icon(Icons.book),label: "",
@@ -95,14 +120,14 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     BottomNavigationBarItem(icon: Icon(Icons.share),label: "",
-                        backgroundColor: const Color(0xff30292F)
+                        backgroundColor: Color(0xff30292F)
                     ),
                   ]
                   )
               ),
             )
       ),
-      
+          )
     );
   }
 }

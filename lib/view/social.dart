@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodadd/main.dart';
+
+import 'package:foodadd/login_signup.dart';
 
 
 class SocialPage extends StatefulWidget {
@@ -14,22 +17,34 @@ class _SocialPageState extends State<SocialPage> {
 
   @override
   Widget build(BuildContext context) {
-  
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        childCount: posts.length,
-        (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: PostCard(
-              title: posts[index]["title"],
-              image: posts[index]["image"],
-              author: posts[index]["author"],
-              rating: posts[index]["rating"],
-            )
+
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: ((context, snapshot) {
+        if (snapshot.hasData) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: posts.length,
+              (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: PostCard(
+                    title: posts[index]["title"],
+                    image: posts[index]["image"],
+                    author: posts[index]["author"],
+                    rating: posts[index]["rating"],
+                  )
+                );
+              },
+            ),
           );
-        },
-      ),
+        }
+        else {
+          return const SliverToBoxAdapter(
+            child: LoginSignUp(),
+          );
+        }
+      })
     );
   }
 }
